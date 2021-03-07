@@ -19,6 +19,11 @@ void Generator::init()
   // 从n个中取k个
   int n = source_list.size();
   int k = _point_num;
+
+  if (n < k) {
+    std::cout << "[ERROR] comb (n < k) !!" << std::endl;
+  }
+
   // 初始化从0,1,2,3,...,(k-1)
   std::vector<int> idx_list;
   idx_list.resize(k);
