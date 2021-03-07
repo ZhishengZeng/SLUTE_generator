@@ -34,6 +34,8 @@ class POST
 
   ~POST()
   {
+    _edge_list.clear();
+    _edge_idx_list.clear();
 #if OBJECT_DESTROY_LOG
     cout << "call class<POST> destructor.\n";
 #endif

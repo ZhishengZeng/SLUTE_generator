@@ -196,8 +196,8 @@ bool Util::isConnected(std::vector<Point>&                 point_list,
   std::stack<Point> point_stack;
   point_stack.push(curr_point);
   while (true) {
-    // 从当前点出发，找到存在当前点且未访问的边 将此边置为visit
-    // 若已经访问则跳过，若遍历完无可访问的边，则此点出栈 并将他的父节点设为当前节点
+    // 从当前点出发,找到存在当前点且未访问的边 将此边置为visit
+    // 若已经访问则跳过,若遍历完无可访问的边,则此点出栈 并将他的父节点设为当前节点
     int find_flag = 0;
     for (size_t i = 0; i < edge_visit_list.size(); i++) {
       if (edge_visit_list[i].second == 0) {
@@ -239,7 +239,7 @@ bool Util::isConnected(std::vector<Point>&                 point_list,
         return true;
       }
     } else if (find_flag == 1) {
-      // 查看备选点是否已经被访问 没被访问则将此点设为当前节点 否则存在环，返回flase
+      // 查看备选点是否已经被访问 没被访问则将此点设为当前节点 否则存在环,返回flase
       for (size_t i = 0; i < point_visit_list.size(); i++) {
         if (curr_point == point_visit_list[i].first) {
           if (point_visit_list[i].second == 1) {

@@ -35,6 +35,8 @@ class POWV
 
   ~POWV()
   {
+    _edge_num_list.clear();
+    _post_list.clear();
 #if OBJECT_DESTROY_LOG
     cout << "call class<POWV> destructor.\n";
 #endif

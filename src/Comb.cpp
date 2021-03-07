@@ -3,6 +3,14 @@
 #include "Util.h"
 namespace slut {
 
+void Comb::initCombInfo()
+{
+  // 初始化powv_h与powv_v
+  initPowvInfo();
+  // 初始化powv总和上界
+  initUpBound();
+}
+
 void Comb::initPowvInfo()
 {
   for (size_t j = 0; j < _point_list.size(); j++) {
@@ -82,13 +90,40 @@ void Comb::initVTreeLength()
   _v_tree_length += _powv_v;
 }
 
+void Comb::initPreTree()
+{
+}
+
+void reportEdgeNumList(int powv_h, int powv_v, std::vector<int> edge_num_list, bool yes)
+{
+  if ((int) edge_num_list.size() != (powv_h + powv_v)) {
+    std::cout << "[WRAN] edge_num_list.size() != (powv_h + powv_v) !!";
+  }
+
+  // print edge_num_list
+  std::cout << "       [ ";
+  for (int i = 0; i < powv_h; i++) {
+    std::cout << edge_num_list[i] << " ";
+  }
+  std::cout << "/ ";
+  for (int i = powv_h; i < (powv_h + powv_v); i++) {
+    std::cout << edge_num_list[i] << " ";
+  }
+  std::cout << "] ";
+  if (yes) {
+    std::cout << "yes" << std::endl;
+  } else {
+    std::cout << "no" << std::endl;
+  }
+}
+
 /**
  * @brief 热创建powv(每创建一个powv即马上创建对应的post)
  *             ***暴力傻瓜式解决多重集合的组合问题***
  *              _ _ _ _ 上限是 2 2 3 3
  *              那么 source_list 为 0011222333
- *              从 source_list 中取r个数，即为多重集合的r组合
- *              取出的r组合内有重复的组合，需要去重(效率低)
+ *              从 source_list 中取r个数,即为多重集合的r组合
+ *              取出的r组合内有重复的组合,需要去重(效率低)
  */
 void Comb::createPowv()
 {
@@ -98,11 +133,12 @@ void Comb::createPowv()
   std::vector<int> source_list;
   for (int i = 0; i < (_powv_h + _powv_v); i++) {
     if (i < _powv_h) {
-      for (int j = 0; j < (_powv_v + 1); j++) {
+      // 这里不是(_powv_v+1)而是_powv_v,因为是在111...的基础上追加的
+      for (int j = 0; j < _powv_v; j++) {
         source_list.push_back(i);
       }
     } else {
-      for (int j = 0; j < (_powv_h + 1); j++) {
+      for (int j = 0; j < _powv_h; j++) {
         source_list.push_back(i);
       }
     }
@@ -133,14 +169,20 @@ void Comb::createPowv()
         std::set<std::vector<int>>::iterator iter = edge_num_memo_set.find(edge_num_list);
         if (iter == edge_num_memo_set.end()) {
           // 没有出现过
-          for (size_t i = 0; i < edge_num_list.size(); i++) {
-            std::cout << edge_num_list[i];
-          }
-          std::cout << std::endl;
           edge_num_memo_set.insert(edge_num_list);
-          POWV powv(edge_num_list);
+          // 报告时输出
+          std::vector<int> edge_num_list_temp = edge_num_list;
+          POWV             powv(edge_num_list);
           powv.createPost(_powv_h, _powv_v, _point_list);
-          // 如果此POWV出现有效POST则记录，并停止生成新的POWV
+          // 如果此POWV出现有效POST则记录,重置增量,本轮为最后一轮
+          if (powv.get_post_list().size() > 0) {
+            reportEdgeNumList(_powv_h, _powv_v, edge_num_list_temp, true);
+            _powv_list.push_back(move(powv));
+            max_increment = r;
+          } else {
+            reportEdgeNumList(_powv_h, _powv_v, edge_num_list_temp, false);
+          }
+          // 如果此POWV出现有效POST则记录,直接结束
           if (powv.get_post_list().size() > 0) {
             _powv_list.push_back(move(powv));
             return;
@@ -174,10 +216,10 @@ void Comb::createPowv()
 
 void Comb::process()
 {
-  // 初始化powv_h与powv_v
-  initPowvInfo();
-  // 初始化powv总和上界
-  initUpBound();
+  // 初始化点组合信息
+  initCombInfo();
+  // 初始化预备树
+  initPreTree();
   // 初始化powv
   createPowv();
 }
@@ -221,6 +263,8 @@ void Comb::write()
 }
 void Comb::destroy()
 {
+  _point_list.clear();
+  _powv_list.clear();
 }
 
 void Comb::print()

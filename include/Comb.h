@@ -109,11 +109,13 @@ class Comb
 
   // function
   void process();
+  void initCombInfo();
   void initPowvInfo();
   void initUpBound();
   void initBalancePoint();
   void initHTreeLength();
   void initVTreeLength();
+  void initPreTree();
   void createPowv();
   void write();
   void destroy();

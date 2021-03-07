@@ -8,12 +8,7 @@ void POWV::createPost(int powv_h, int powv_v, std::vector<Point>& point_list)
   // 初始化边组合集合
   std::vector<std::vector<std::vector<Edge>>> edge_comb_list;
   initEdgeCombList(powv_h, powv_v, edge_comb_list);
-  int s = 1;
-  for (size_t i = 0; i < edge_comb_list.size(); i++) {
-    s *= edge_comb_list[i].size();
-  }
-  std::cout << "s " << s << std::endl;
-  return;
+
   // 初始化全零开始
   std::vector<int> idx_list;
   idx_list.resize(edge_comb_list.size());
@@ -27,11 +22,11 @@ void POWV::createPost(int powv_h, int powv_v, std::vector<Point>& point_list)
           temp_list.push_back(edge_comb_list[i][idx_list[i]][j]);
         }
       }
-      // if (Util::filterPOST(point_list, temp_list)) {
-      //   POST post(temp_list);
-      //   post.initEdgeIdxList(powv_h, powv_v);
-      //   _post_list.push_back(std::move(post));
-      // }
+      if (Util::filterPOST(point_list, temp_list)) {
+        POST post(temp_list);
+        post.initEdgeIdxList(powv_h, powv_v);
+        _post_list.push_back(std::move(post));
+      }
 
       // 若已达到上界,终止累加
       if ((idx_list[edge_comb_list.size() - 1] + 1)
@@ -65,37 +60,42 @@ void POWV::initEdgeCombList(int                                          powv_h,
                             std::vector<std::vector<std::vector<Edge>>>& edge_comb_list)
 {
   for (int i = 0; i < (powv_h + powv_v); i++) {
-    std::vector<std::vector<Edge>> edge_comb;
-    std::vector<Edge>              edge_list;
+    std::vector<Edge> source_list;
     if (i < powv_h) {
       for (int j = 0; j < (powv_v + 1); j++) {
         Point m_point(i, j);
         Point l_point(i + 1, j);
-        edge_list.emplace_back(m_point, l_point);
+        source_list.emplace_back(m_point, l_point);
       }
     } else {
       for (int j = 0; j < (powv_h + 1); j++) {
         Point m_point(j, (i - powv_h));
         Point t_point(j, (i - powv_h + 1));
-        edge_list.emplace_back(m_point, t_point);
+        source_list.emplace_back(m_point, t_point);
       }
     }
+    std::vector<std::vector<Edge>> result_list;
     // 从n个中取k个
-    int n = edge_list.size();
+    int n = source_list.size();
     int k = _edge_num_list[i];
+    if (n < k) {
+      std::cout << "[ERROR] comb (n < k) !!" << std::endl;
+    }
+
     // 初始化从0,1,2,3,...,(k-1)
     std::vector<int> idx_list;
     idx_list.resize(k);
-    for (int i = 0; i < k; i++) {
-      idx_list[i] = i;
+    for (int j = 0; j < k; j++) {
+      idx_list[j] = j;
     }
+
     while (true) {
       while (true) {
         std::vector<Edge> temp_list;
-        for (int i = 0; i < k; i++) {
-          temp_list.push_back(edge_list[idx_list[i]]);
+        for (int j = 0; j < k; j++) {
+          temp_list.push_back(source_list[idx_list[j]]);
         }
-        edge_comb.push_back(temp_list);
+        result_list.push_back(temp_list);
         if ((idx_list[k - 1] + 1) == n) {
           break;
         }
@@ -108,8 +108,8 @@ void POWV::initEdgeCombList(int                                          powv_h,
           // 找到一个未达到上界 +1
           idx_list[nub_idx]++;
           // 将此上界右边的所有值设为逐项相加
-          for (int i = (nub_idx + 1); i < k; i++) {
-            idx_list[i] = idx_list[i - 1] + 1;
+          for (int j = (nub_idx + 1); j < k; j++) {
+            idx_list[j] = idx_list[j - 1] + 1;
           }
           break;
         }
@@ -119,7 +119,7 @@ void POWV::initEdgeCombList(int                                          powv_h,
         break;
       }
     }
-    edge_comb_list.push_back(edge_comb);
+    edge_comb_list.push_back(result_list);
   }
 }
 

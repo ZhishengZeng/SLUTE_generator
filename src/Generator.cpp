@@ -85,15 +85,14 @@ void Generator::init()
 
 void Generator::process()
 {
-  int process_num = 0;
-  for (size_t i = 0; i < _comb_list.size(); i++) {
+  int process_num = 1;
+  for (size_t i = 0; i < _comb_list.size(); i++, process_num++) {
+    std::cout << "[INFO] Processing " << process_num << "/" << _comb_list.size() << " combs"
+              << std::endl;
     _comb_list[i].process();
     _comb_list[i].write();
     _comb_list[i].print();
     _comb_list[i].destroy();
-    process_num++;
-    std::cout << "[INFO] Processed " << process_num << "/" << _comb_list.size() << "("
-              << process_num / 1.0 / _comb_list.size() * 100 << "%) combs" << std::endl;
   }
 }
 
