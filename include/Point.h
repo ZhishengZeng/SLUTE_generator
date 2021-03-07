@@ -9,6 +9,7 @@
 #include <cmath>
 #include <fstream>
 #include <iostream>
+#include <set>
 #include <stack>
 #include <string>
 #include <vector>
@@ -95,6 +96,8 @@ class Point
   // function
   void reduce_x(const int reduction) { _x -= reduction; }
   void reduce_y(const int reduction) { _y -= reduction; }
+
+  void print() { std::cout << "(" << _x << "," << _y << ")"; }
 };
 
 }  // namespace slut

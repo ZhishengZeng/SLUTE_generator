@@ -61,11 +61,19 @@ class POWV
     return (*this);
   }
   // getter
-  std::vector<int>& get_edge_num_list() { return _edge_num_list; }
+  std::vector<int>&  get_edge_num_list() { return _edge_num_list; }
+  std::vector<POST>& get_post_list() { return _post_list; }
 
   // setter
 
   // function
+  void createPost(int powv_h, int powv_v, std::vector<Point>& point_list);
+  void initEdgeCombList(int                                          powv_h,
+                        int                                          powv_v,
+                        std::vector<std::vector<std::vector<Edge>>>& edge_comb_list);
+  void print(int powv_h, int powv_v);
+  void printEdgeNumList(int powv_h, int powv_v);
+  void printPostList(int powv_h, int powv_v);
 };
 
 }  // namespace slut

@@ -60,10 +60,12 @@ class POST
     return (*this);
   }
   // getter
-
+  std::vector<std::vector<int>>& get_edge_idx_list() { return _edge_idx_list; }
   // setter
 
   // function
+  void initEdgeIdxList(int powv_h, int powv_v);
+  void print();
 };
 
 }  // namespace slut

@@ -6,6 +6,7 @@ namespace slut {
 class Comb
 {
  private:
+  std::ofstream* _slut_file;
   // POWV length = powv_h+powv_v;
   int    _powv_h;
   int    _powv_v;
@@ -18,7 +19,13 @@ class Comb
   std::vector<POWV>  _powv_list;
 
  public:
-  Comb(std::vector<Point>& point_list) : _point_list(move(point_list))
+  Comb(std::ofstream* slut_file, std::vector<Point>& point_list)
+      : _slut_file(slut_file),
+        _powv_h(0),
+        _powv_v(0),
+        _h_tree_length(0),
+        _v_tree_length(0),
+        _point_list(move(point_list))
   {
 #if OBJECT_CREATE_LOG
     cout << "call class<Comb> constructor.\n";
@@ -102,8 +109,17 @@ class Comb
 
   // function
   void process();
+  void initPowvInfo();
+  void initUpBound();
+  void initBalancePoint();
+  void initHTreeLength();
+  void initVTreeLength();
+  void createPowv();
   void write();
   void destroy();
+  void print();
+  void printCombInfo();
+  void printPowvs();
 };
 
 }  // namespace slut

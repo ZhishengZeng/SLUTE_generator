@@ -10,6 +10,7 @@ class Generator
  private:
   int               _point_num;
   std::vector<Comb> _comb_list;
+  std::ofstream*    _slut_file;
 
  public:
   Generator()
@@ -63,11 +64,11 @@ class Generator
 
   // setter
   void set_point_num(const int point_num) { _point_num = point_num; }
-
+  void set_slut_file(std::ofstream* slut_file) { _slut_file = slut_file; }
   // function
   void run();
-  void initCombs();
-  void processCombs();
+  void init();
+  void process();
 };
 
 }  // namespace slut

@@ -69,6 +69,11 @@ class Edge
   // setter
 
   // function
+  void print()
+  {
+    _p1.print();
+    _p2.print();
+  }
 };
 
 }  // namespace slut

@@ -21,19 +21,17 @@ class Util
    * return set<vector<T>>
    */
   template <typename T>
-  static std::vector<std::vector<T>> combine(std::vector<T> source_list,
-                                             int            k,
-                                             bool (*filter)(std::vector<T>&)             = nullptr,
-                                             int (*unique)(std::vector<std::vector<T>>&) = nullptr)
+  static void combine(std::vector<std::vector<T>>& result_list,
+                      std::vector<T>&              source_list,
+                      int                          k,
+                      bool (*filter)(std::vector<T>&)             = nullptr,
+                      int (*unique)(std::vector<std::vector<T>>&) = nullptr)
   {
-    std::vector<std::vector<T>> result_list;
     if (source_list.size() == 0) {
       std::cout << "[WARN] source_list size is zero!!" << std::endl;
-      return result_list;
     }
     if ((int) source_list.size() < k) {
       std::cout << "[WARN] combine stop: k is greater than source_list size!!" << std::endl;
-      return result_list;
     }
     // 从n个中取k个
     int n = source_list.size();
@@ -102,8 +100,6 @@ class Util
       unique(result_list);
       std::cout << "[INFO] Created " << result_list.size() << " Combs" << std::endl;
     }
-
-    return result_list;
   };
 
   /**
@@ -180,48 +176,17 @@ class Util
   static bool comparePointASCByX(Point& a, Point& b);
   static bool comparePointASCByY(Point& a, Point& b);
   static bool comparePointListASCByX(std::vector<Point>& a_list, std::vector<Point>& b_list);
-  static bool comparePointListASCByY(std::vector<Point>& a_list, std::vector<Point>& b_list);
   static bool compareEqualPointList(std::vector<Point>& point_list_a,
                                     std::vector<Point>& point_list_b);
 
   static bool compareEdgeASCByX(Edge& a, Edge& b);
-  static bool compareEdgeListASCByX(std::vector<Edge>& a_list, std::vector<Edge>& b_list);
-  static bool compareEqualEdgeList(std::vector<Edge>& edge_list_a, std::vector<Edge>& edge_list_b);
-
-  static bool comparePOWVBySumASC(POWV& powv_a, POWV& powv_b);
 
   static void compressGeometryByX(std::vector<Point>& temp_list);
   static void compressGeometryByY(std::vector<Point>& temp_list);
 
-  static void compressPointList(std::vector<Point>& temp_list);
-
   // 生成PointList
   static bool filterPointList(std::vector<Point>& temp_list);
   static int  UniquePointList(std::vector<std::vector<Point>>& result_list);
-  static void combinePointList(std::vector<std::vector<Point>>& result_list,
-                               std::vector<Point>&              source_list,
-                               int                              k,
-                               bool (*filter)(std::vector<Point>&),
-                               int (*unique)(std::vector<std::vector<Point>>&));
-
-  // 生成EdgeNumList (使用过滤器效率低)
-  static void productEdgeNumList(std::vector<std::vector<int>>& result_list,
-                                 std::vector<std::vector<int>>& source_list,
-                                 int                            upper_bound);
-
-  // 生成初始边集合
-  static bool filterInitEdgeList(std::vector<Edge>& temp_list);
-  static int  UniqueInitEdgeList(std::vector<std::vector<Edge>>& result_list);
-  static void productInitEdgeList(std::vector<std::vector<Edge>>& result_list,
-                                  std::vector<std::vector<Edge>>& source_list,
-                                  bool (*filter)(std::vector<Edge>&),
-                                  int (*unique)(std::vector<std::vector<Edge>>&));
-
-  // 匹配边数
-  static bool isMappingEdgeNum(int&              diff_s,
-                               std::vector<int>& diff_num_list,
-                               std::vector<int>& powv_edge_num_list,
-                               std::vector<int>& pt_edge_num_list);
 
   // 计算点的出度
   static void countPointDegree(std::vector<std::pair<Point, int>>& point_num_list, Point& point);
@@ -235,15 +200,7 @@ class Util
                           std::vector<std::pair<Point, int>>& point_num_list);
 
   // 生成POST集合
-  static bool filterPOST(std::vector<Point>& given_point_list, std::vector<Edge>& temp_list);
-  static int  UniquePOST(std::vector<std::vector<Edge>>& source_list);
-  static void productPOST(std::vector<std::vector<Edge>>& result_list,
-                          std::vector<std::vector<Edge>>& source_list,
-                          std::vector<Edge>&              pre_tree,
-                          std::vector<Point>&             given_point_list,
-                          bool (*filter)(std::vector<Point>& given_point_list,
-                                         std::vector<Edge>&  temp_edge_list),
-                          int (*unique)(std::vector<std::vector<Edge>>&));
+  static bool filterPOST(std::vector<Point>& point_list, std::vector<Edge>& temp_list);
 };
 }  // namespace slut
 #endif  // INCLUDE_UTIL_H_
