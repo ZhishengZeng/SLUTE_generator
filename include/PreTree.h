@@ -34,6 +34,8 @@ class PreTree
 
   ~PreTree()
   {
+    _edge_num_list.clear();
+    _edge_list.clear();
 #if OBJECT_DESTROY_LOG
     cout << "call class<PreTree> destructor.\n";
 #endif
@@ -68,7 +70,7 @@ class PreTree
   void print(int powv_h, int powv_v)
   {
     // print _edge_num_list
-    std::cout << "          [";
+    std::cout << "[INFO]           [";
     std::cout << " ";
     for (int i = 0; i < powv_h; i++) {
       std::cout << _edge_num_list[i];
@@ -83,6 +85,7 @@ class PreTree
     // print _edge_list
     std::cout << "[";
     for (size_t i = 0; i < _edge_list.size(); i++) {
+      std::cout << " ";
       _edge_list[i].print();
     }
     std::cout << " ]\n";

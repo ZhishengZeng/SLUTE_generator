@@ -6,6 +6,8 @@ namespace slut {
 
 void Generator::init()
 {
+  // 记录给定点个数
+  (*_slut_file) << "p=" << _point_num << "\n";
   // 初始化所有点集
   std::vector<Point> source_list;
   source_list.reserve(_point_num * _point_num);
@@ -19,11 +21,6 @@ void Generator::init()
   // 从n个中取k个
   int n = source_list.size();
   int k = _point_num;
-
-  if (n < k) {
-    std::cout << "[ERROR] comb (n < k) !!" << std::endl;
-  }
-
   // 初始化从0,1,2,3,...,(k-1)
   std::vector<int> idx_list;
   idx_list.resize(k);
@@ -41,7 +38,7 @@ void Generator::init()
       }
       // 过滤器
       if (Util::filterPointList(temp_list)) {
-        result_list.push_back(temp_list);
+        result_list.push_back(move(temp_list));
         create_num++;
       }
       // 去重器 (压缩后出现大量重复)

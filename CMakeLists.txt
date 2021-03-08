@@ -6,6 +6,7 @@ src/Comb.cpp
 src/Generator.cpp
 src/POST.cpp
 src/POWV.cpp
+src/PreTree.cpp
 src/Util.cpp)
 
 SET(CMAKE_BUILD_TYPE "Release")

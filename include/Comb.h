@@ -14,9 +14,10 @@ class Comb
   double _h_tree_length;
   double _v_tree_length;
   // if _h_tree_length > 0 && _v_tree_length > 0 _upper_bound=min(_h_tree_length,_v_tree_length)
-  double             _upper_bound;
-  std::vector<Point> _point_list;
-  std::vector<POWV>  _powv_list;
+  double               _upper_bound;
+  std::vector<Point>   _point_list;
+  std::vector<PreTree> _pre_tree_list;
+  std::vector<POWV>    _powv_list;
 
  public:
   Comb(std::ofstream* slut_file, std::vector<Point>& point_list)
@@ -40,6 +41,7 @@ class Comb
         _v_tree_length(other._v_tree_length),
         _upper_bound(other._upper_bound),
         _point_list(other._point_list),
+        _pre_tree_list(other._pre_tree_list),
         _powv_list(other._powv_list)
   {
 #if OBJECT_COPY_LOG
@@ -55,6 +57,7 @@ class Comb
         _v_tree_length(other._v_tree_length),
         _upper_bound(other._upper_bound),
         _point_list(move(other._point_list)),
+        _pre_tree_list(move(other._pre_tree_list)),
         _powv_list(move(other._powv_list))
   {
 #if OBJECT_MOVE_LOG
@@ -78,6 +81,7 @@ class Comb
     _v_tree_length = other._v_tree_length;
     _upper_bound   = other._upper_bound;
     _point_list    = other._point_list;
+    _pre_tree_list = other._pre_tree_list;
     _powv_list     = other._powv_list;
 #if OBJECT_COPY_LOG
     cout << "call class<Comb> operator=(copy).\n";
@@ -94,6 +98,7 @@ class Comb
     _v_tree_length = other._v_tree_length;
     _upper_bound   = other._upper_bound;
     _point_list    = move(other._point_list);
+    _pre_tree_list = move(other._pre_tree_list);
     _powv_list     = move(other._powv_list);
 #if OBJECT_MOVE_LOG
 
@@ -116,11 +121,14 @@ class Comb
   void initHTreeLength();
   void initVTreeLength();
   void initPreTree();
+  void initDegreeEdgeList(std::vector<std::vector<Edge>>& degree_edge_list);
   void createPowv();
+  void reportEdgeNumList(std::vector<int>& edge_num_list, bool yes);
   void write();
   void destroy();
   void print();
   void printCombInfo();
+  void printPreTrees();
   void printPowvs();
 };
 

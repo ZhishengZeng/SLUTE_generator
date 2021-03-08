@@ -2,6 +2,8 @@
 #ifndef INCLUDE_POWV_H_
 #define INCLUDE_POWV_H_
 #include "POST.h"
+#include "PreTree.h"
+
 namespace slut {
 
 class POWV
@@ -69,9 +71,14 @@ class POWV
   // setter
 
   // function
-  void createPost(int powv_h, int powv_v, std::vector<Point>& point_list);
+  void createPost(int                   powv_h,
+                  int                   powv_v,
+                  std::vector<Point>&   point_list,
+                  std::vector<PreTree>& pre_tree_list);
   void initEdgeCombList(int                                          powv_h,
                         int                                          powv_v,
+                        std::vector<int>&                            diff_num_list,
+                        std::vector<Edge>&                           pt_edge_list,
                         std::vector<std::vector<std::vector<Edge>>>& edge_comb_list);
   void print(int powv_h, int powv_v);
   void printEdgeNumList(int powv_h, int powv_v);

@@ -7,7 +7,7 @@ int main()
 {
   std::ofstream* slut_file = new std::ofstream("slut.txt");
 
-  for (size_t i = 6; i <= 6; i++) {
+  for (size_t i = 2; i <= 4; i++) {
     std::cout << "[INFO] Now create " << i << " points look-up table" << std::endl;
     double start, end;
     start = Util::microtime();
@@ -22,5 +22,7 @@ int main()
     std::cout << "[INFO] Created " << i << " points look-up table : " << (end - start) << "s"
               << std::endl;
   }
+
+  slut_file->close();
   return 0;
 }

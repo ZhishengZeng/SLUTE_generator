@@ -31,7 +31,6 @@ bool Util::comparePointListASCByX(std::vector<Point>& a_list, std::vector<Point>
     return a_list.size() < b_list.size();
   }
 }
-
 bool Util::compareEqualPointList(std::vector<Point>& point_list_a, std::vector<Point>& point_list_b)
 {
   if (point_list_a.size() != point_list_b.size()) {
@@ -54,6 +53,32 @@ bool Util::compareEdgeASCByX(Edge& a, Edge& b)
     // p1相等比较p2
     return comparePointASCByX(a.get_p2(), b.get_p2());
   }
+}
+bool Util::compareEdgeListASCByX(std::vector<Edge>& a_list, std::vector<Edge>& b_list)
+{
+  if (a_list.size() == b_list.size()) {
+    for (size_t i = 0; i < a_list.size(); i++) {
+      if (a_list[i] != b_list[i]) {
+        return compareEdgeASCByX(a_list[i], b_list[i]);
+      }
+    }
+    return false;
+
+  } else {
+    return a_list.size() < b_list.size();
+  }
+}
+bool Util::compareEqualEdgeList(std::vector<Edge>& edge_list_a, std::vector<Edge>& edge_list_b)
+{
+  if (edge_list_a.size() != edge_list_b.size()) {
+    return false;
+  }
+  for (size_t i = 0; i < edge_list_a.size(); i++) {
+    if (edge_list_a[i] != edge_list_b[i]) {
+      return false;
+    }
+  }
+  return true;
 }
 
 void Util::compressGeometryByX(std::vector<Point>& temp_list)
@@ -140,7 +165,94 @@ int Util::UniquePointList(std::vector<std::vector<Point>>& result_list)
   result_list.erase(result_list.begin() + save_id, result_list.end());
   return delete_num;
 };
+// filterPreTrees:可能会导致出度边重叠
+bool Util::filterEdgeList(std::vector<Edge>& temp_list)
+{
+  std::sort(temp_list.begin(), temp_list.end(), Util::compareEdgeASCByX);
+  // 判断边是否有重叠 有重叠去重
 
+  size_t save_id    = 0;
+  size_t sentry_id  = 0;
+  size_t soldier_id = sentry_id + 1;
+  while (sentry_id < temp_list.size()) {
+    Edge& sentry_edge = temp_list[sentry_id];
+    while (soldier_id < temp_list.size()) {
+      Edge& soldier_edge = temp_list[soldier_id];
+      if (sentry_edge != soldier_edge) {
+        break;
+      }
+      ++soldier_id;
+    }
+    temp_list[save_id] = sentry_edge;
+    ++save_id;
+    if (!(soldier_id < temp_list.size())) {
+      break;
+    }
+    sentry_id  = soldier_id;
+    soldier_id = sentry_id + 1;
+  }
+
+  temp_list.erase(temp_list.begin() + save_id, temp_list.end());
+
+  return true;
+}
+// UniquePreTrees:出度边重叠会导致PreTree重复
+int Util::UniqueEdgeList(std::vector<std::vector<Edge>>& result_list)
+{
+  // 先排序
+  for (size_t i = 0; i < result_list.size(); i++) {
+    std::sort(result_list[i].begin(), result_list[i].end(), Util::compareEdgeASCByX);
+  }
+  std::sort(result_list.begin(), result_list.end(), Util::compareEdgeListASCByX);
+
+  // 后去重
+  int delete_num = 0;
+
+  size_t save_id    = 0;
+  size_t sentry_id  = 0;
+  size_t soldier_id = sentry_id + 1;
+  while (sentry_id < result_list.size()) {
+    std::vector<Edge>& sentry_edge_list = result_list[sentry_id];
+    while (soldier_id < result_list.size()) {
+      std::vector<Edge>& soldier_edge_list = result_list[soldier_id];
+      if (!Util::compareEqualEdgeList(sentry_edge_list, soldier_edge_list)) {
+        break;
+      }
+      ++delete_num;
+      ++soldier_id;
+    }
+    result_list[save_id] = sentry_edge_list;
+    ++save_id;
+    if (!(soldier_id < result_list.size())) {
+      break;
+    }
+    sentry_id  = soldier_id;
+    soldier_id = sentry_id + 1;
+  }
+
+  result_list.erase(result_list.begin() + save_id, result_list.end());
+
+  return delete_num;
+}
+// 匹配边数
+bool Util::isMappingEdgeNum(int&              diff_count,
+                            std::vector<int>& diff_num_list,
+                            std::vector<int>& powv_edge_num_list,
+                            std::vector<int>& pt_edge_num_list)
+{
+  diff_count = 0;
+  diff_num_list.resize(powv_edge_num_list.size());
+  for (size_t i = 0; i < powv_edge_num_list.size(); i++) {
+    int diff = powv_edge_num_list[i] - pt_edge_num_list[i];
+    if (diff < 0) {
+      return false;
+    }
+    diff_count += diff;
+    diff_num_list[i] = diff;
+  }
+  return true;
+}
+// 计算点的出度
 void Util::countPointDegree(std::vector<std::pair<Point, int>>& point_num_list, Point& point)
 {
   int is_push = 1;
@@ -156,16 +268,7 @@ void Util::countPointDegree(std::vector<std::pair<Point, int>>& point_num_list, 
   }
 }
 
-bool Util::isExistIn(std::vector<Point>& point_list, Point& point)
-{
-  for (size_t i = 0; i < point_list.size(); i++) {
-    if (point == point_list[i]) {
-      return true;
-    }
-  }
-  return false;
-}
-
+// 判断边的连通性
 bool Util::isConnected(std::vector<Point>&                 point_list,
                        std::vector<Edge>&                  edge_list,
                        std::vector<std::pair<Point, int>>& point_num_list)
@@ -253,7 +356,7 @@ bool Util::isConnected(std::vector<Point>&                 point_list,
     }
   }
 }
-
+// 过滤POST 判断是否连接给定点 是否有多余边 是否是树
 bool Util::filterPOST(std::vector<Point>& point_list, std::vector<Edge>& temp_list)
 {
   // 判断是否有重复的边
@@ -300,5 +403,39 @@ bool Util::filterPOST(std::vector<Point>& point_list, std::vector<Edge>& temp_li
   // 判断是否连通
   return isConnected(point_list, temp_list, point_num_list);
 }
+// 去重POST PreTree会导致重复的POST
+int Util::UniquePOST(std::vector<std::vector<Edge>>& result_list)
+{
+  // 先排序
+  for (size_t i = 0; i < result_list.size(); i++) {
+    std::sort(result_list[i].begin(), result_list[i].end(), Util::compareEdgeASCByX);
+  }
+  std::sort(result_list.begin(), result_list.end(), Util::compareEdgeListASCByX);
+  // 后去重
+  int delete_num = 0;
 
+  size_t save_id    = 0;
+  size_t sentry_id  = 0;
+  size_t soldier_id = sentry_id + 1;
+  while (sentry_id < result_list.size()) {
+    std::vector<Edge>& sentry_edge_list = result_list[sentry_id];
+    while (soldier_id < result_list.size()) {
+      std::vector<Edge>& soldier_edge_list = result_list[soldier_id];
+      if (!Util::compareEqualEdgeList(sentry_edge_list, soldier_edge_list)) {
+        break;
+      }
+      ++delete_num;
+      ++soldier_id;
+    }
+    result_list[save_id] = sentry_edge_list;
+    ++save_id;
+    if (!(soldier_id < result_list.size())) {
+      break;
+    }
+    sentry_id  = soldier_id;
+    soldier_id = sentry_id + 1;
+  }
+  result_list.erase(result_list.begin() + save_id, result_list.end());
+  return delete_num;
+}
 }  // namespace slut
