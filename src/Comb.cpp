@@ -3,6 +3,16 @@
 #include "Util.h"
 namespace slut {
 
+void Comb::process()
+{
+  // 初始化点组合信息
+  initCombInfo();
+  // 初始化预备树
+  initPreTree();
+  // 初始化powv
+  createPowv();
+}
+
 void Comb::initCombInfo()
 {
   // 初始化powv_h与powv_v
@@ -90,55 +100,6 @@ void Comb::initVTreeLength()
   _v_tree_length += _powv_v;
 }
 
-void Comb::initDegreeEdgeList(std::vector<std::vector<Edge>>& degree_edge_list)
-{
-  degree_edge_list.reserve(_point_list.size());
-  for (size_t i = 0; i < _point_list.size(); i++) {
-    std::vector<Edge> temp_list;
-    temp_list.reserve(4);
-
-    int x = _point_list[i].get_x();
-    int y = _point_list[i].get_y();
-
-    // 中心点
-    Point m_point(x, y);
-    // 右点
-    Point r_point(x + 1, y);
-    // 左点
-    Point l_point(x - 1, y);
-    // 上点
-    Point t_point(x, y + 1);
-    // 下点
-    Point b_point(x, y - 1);
-
-    if (_powv_h > 0) {
-      if (x == 0) {
-        temp_list.emplace_back(m_point, r_point);
-      }
-      if (0 < x && x < _powv_h) {
-        temp_list.emplace_back(m_point, r_point);
-        temp_list.emplace_back(l_point, m_point);
-      }
-      if (x == _powv_h) {
-        temp_list.emplace_back(l_point, m_point);
-      }
-    }
-    if (_powv_v > 0) {
-      if (y == 0) {
-        temp_list.emplace_back(m_point, t_point);
-      }
-      if (0 < y && y < _powv_v) {
-        temp_list.emplace_back(m_point, t_point);
-        temp_list.emplace_back(b_point, m_point);
-      }
-      if (y == _powv_v) {
-        temp_list.emplace_back(b_point, m_point);
-      }
-    }
-    degree_edge_list.push_back(move(temp_list));
-  }
-}
-
 void Comb::initPreTree()
 {
   // 生成每个给定点的出度边集合
@@ -198,26 +159,52 @@ void Comb::initPreTree()
   }
 }
 
-void Comb::reportEdgeNumList(std::vector<int>& edge_num_list, bool yes)
+void Comb::initDegreeEdgeList(std::vector<std::vector<Edge>>& degree_edge_list)
 {
-  if ((int) edge_num_list.size() != (_powv_h + _powv_v)) {
-    std::cout << "[WRAN] edge_num_list.size() != (powv_h + powv_v) !!";
-  }
+  degree_edge_list.reserve(_point_list.size());
+  for (size_t i = 0; i < _point_list.size(); i++) {
+    std::vector<Edge> temp_list;
+    temp_list.reserve(4);
 
-  // print edge_num_list
-  std::cout << "[INFO] [ ";
-  for (int i = 0; i < _powv_h; i++) {
-    std::cout << edge_num_list[i] << " ";
-  }
-  std::cout << "/ ";
-  for (int i = _powv_h; i < (_powv_h + _powv_v); i++) {
-    std::cout << edge_num_list[i] << " ";
-  }
-  std::cout << "] ";
-  if (yes) {
-    std::cout << "yes" << std::endl;
-  } else {
-    std::cout << "no" << std::endl;
+    int x = _point_list[i].get_x();
+    int y = _point_list[i].get_y();
+
+    // 中心点
+    Point m_point(x, y);
+    // 右点
+    Point r_point(x + 1, y);
+    // 左点
+    Point l_point(x - 1, y);
+    // 上点
+    Point t_point(x, y + 1);
+    // 下点
+    Point b_point(x, y - 1);
+
+    if (_powv_h > 0) {
+      if (x == 0) {
+        temp_list.emplace_back(m_point, r_point);
+      }
+      if (0 < x && x < _powv_h) {
+        temp_list.emplace_back(m_point, r_point);
+        temp_list.emplace_back(l_point, m_point);
+      }
+      if (x == _powv_h) {
+        temp_list.emplace_back(l_point, m_point);
+      }
+    }
+    if (_powv_v > 0) {
+      if (y == 0) {
+        temp_list.emplace_back(m_point, t_point);
+      }
+      if (0 < y && y < _powv_v) {
+        temp_list.emplace_back(m_point, t_point);
+        temp_list.emplace_back(b_point, m_point);
+      }
+      if (y == _powv_v) {
+        temp_list.emplace_back(b_point, m_point);
+      }
+    }
+    degree_edge_list.push_back(move(temp_list));
   }
 }
 
@@ -319,14 +306,27 @@ void Comb::createPowv()
   }
 }
 
-void Comb::process()
+void Comb::reportEdgeNumList(std::vector<int>& edge_num_list, bool yes)
 {
-  // 初始化点组合信息
-  initCombInfo();
-  // 初始化预备树
-  initPreTree();
-  // 初始化powv
-  createPowv();
+  if ((int) edge_num_list.size() != (_powv_h + _powv_v)) {
+    std::cout << "[WRAN] edge_num_list.size() != (powv_h + powv_v) !!";
+  }
+
+  // print edge_num_list
+  std::cout << "[INFO] [ ";
+  for (int i = 0; i < _powv_h; i++) {
+    std::cout << edge_num_list[i] << " ";
+  }
+  std::cout << "/ ";
+  for (int i = _powv_h; i < (_powv_h + _powv_v); i++) {
+    std::cout << edge_num_list[i] << " ";
+  }
+  std::cout << "] ";
+  if (yes) {
+    std::cout << "yes" << std::endl;
+  } else {
+    std::cout << "no" << std::endl;
+  }
 }
 
 void Comb::write()
@@ -366,12 +366,6 @@ void Comb::write()
     }
   }
 }
-void Comb::destroy()
-{
-  _point_list.clear();
-  _pre_tree_list.clear();
-  _powv_list.clear();
-}
 
 void Comb::print()
 {
@@ -394,6 +388,7 @@ void Comb::printCombInfo()
   std::cout << " upper_bound:" << _upper_bound;
   std::cout << std::endl;
 }
+
 void Comb::printPreTrees()
 {
   if (_pre_tree_list.size() > 0) {
@@ -402,6 +397,7 @@ void Comb::printPreTrees()
       _pre_tree_list[i].print(_powv_h, _powv_v);
   }
 }
+
 void Comb::printPowvs()
 {
   if (_powv_list.size() > 0) {
@@ -411,6 +407,13 @@ void Comb::printPowvs()
       _powv_list[i].print(_powv_h, _powv_v);
     std::cout << std::endl;
   }
+}
+
+void Comb::destroy()
+{
+  _point_list.clear();
+  _pre_tree_list.clear();
+  _powv_list.clear();
 }
 
 }  // namespace slut

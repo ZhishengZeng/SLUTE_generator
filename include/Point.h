@@ -88,15 +88,12 @@ class Point
   // getter
   int get_x() const { return _x; }
   int get_y() const { return _y; }
-
   // setter
   void set_x(const int x) { _x = x; }
   void set_y(const int y) { _y = y; }
-
   // function
   void reduce_x(const int reduction) { _x -= reduction; }
   void reduce_y(const int reduction) { _y -= reduction; }
-
   void print() { std::cout << "(" << _x << "," << _y << ")"; }
 };
 

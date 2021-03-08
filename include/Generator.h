@@ -66,7 +66,6 @@ class Generator
   void set_point_num(const int point_num) { _point_num = point_num; }
   void set_slut_file(std::ofstream* slut_file) { _slut_file = slut_file; }
   // function
-  void run();
   void init();
   void process();
 };

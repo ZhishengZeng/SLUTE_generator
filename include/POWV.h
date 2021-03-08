@@ -67,7 +67,6 @@ class POWV
   // getter
   std::vector<int>&  get_edge_num_list() { return _edge_num_list; }
   std::vector<POST>& get_post_list() { return _post_list; }
-
   // setter
 
   // function

@@ -17,30 +17,25 @@ class Util
   static bool comparePointListASCByX(std::vector<Point>& a_list, std::vector<Point>& b_list);
   static bool compareEqualPointList(std::vector<Point>& point_list_a,
                                     std::vector<Point>& point_list_b);
-
   static bool compareEdgeASCByX(Edge& a, Edge& b);
   static bool compareEdgeListASCByX(std::vector<Edge>& a_list, std::vector<Edge>& b_list);
   static bool compareEqualEdgeList(std::vector<Edge>& edge_list_a, std::vector<Edge>& edge_list_b);
-
   static void compressGeometryByX(std::vector<Point>& temp_list);
   static void compressGeometryByY(std::vector<Point>& temp_list);
-
-  // 过滤Comb
   static bool filterPointList(std::vector<Point>& temp_list);
   static int  UniquePointList(std::vector<std::vector<Point>>& result_list);
-
-  // 过滤PreTree
   static bool filterEdgeList(std::vector<Edge>& temp_list);
   static int  UniqueEdgeList(std::vector<std::vector<Edge>>& result_list);
-
   static bool isMappingEdgeNum(int&              diff_count,
                                std::vector<int>& diff_num_list,
                                std::vector<int>& powv_edge_num_list,
                                std::vector<int>& pt_edge_num_list);
-
-  // 计算点的出度
   static void countPointDegree(std::vector<std::pair<Point, int>>& point_num_list, Point& point);
-
+  static bool isConnected(std::vector<Point>&                 given_point_list,
+                          std::vector<Edge>&                  edge_list,
+                          std::vector<std::pair<Point, int>>& point_num_list);
+  static bool filterPOST(std::vector<Point>& point_list, std::vector<Edge>& temp_list);
+  static int  UniquePOST(std::vector<std::vector<Edge>>& source_list);
   // 判断点是否在集合内
   template <typename T>
   static bool isExistIn(std::vector<T>& list, T& t)
@@ -52,14 +47,7 @@ class Util
     }
     return false;
   }
-  // 判断边的连通性
-  static bool isConnected(std::vector<Point>&                 given_point_list,
-                          std::vector<Edge>&                  edge_list,
-                          std::vector<std::pair<Point, int>>& point_num_list);
 
-  // 生成POST集合
-  static bool filterPOST(std::vector<Point>& point_list, std::vector<Edge>& temp_list);
-  static int  UniquePOST(std::vector<std::vector<Edge>>& source_list);
   /**
    * input  {}
    * output {}

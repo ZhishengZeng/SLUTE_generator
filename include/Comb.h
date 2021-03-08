@@ -125,11 +125,11 @@ class Comb
   void createPowv();
   void reportEdgeNumList(std::vector<int>& edge_num_list, bool yes);
   void write();
-  void destroy();
   void print();
   void printCombInfo();
   void printPreTrees();
   void printPowvs();
+  void destroy();
 };
 
 }  // namespace slut

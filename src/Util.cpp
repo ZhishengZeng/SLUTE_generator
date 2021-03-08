@@ -14,10 +14,12 @@ bool Util::comparePointASCByX(Point& a, Point& b)
 {
   return a.get_x() != b.get_x() ? a.get_x() < b.get_x() : a.get_y() < b.get_y();
 }
+
 bool Util::comparePointASCByY(Point& a, Point& b)
 {
   return a.get_y() != b.get_y() ? a.get_y() < b.get_y() : a.get_x() < b.get_x();
 }
+
 bool Util::comparePointListASCByX(std::vector<Point>& a_list, std::vector<Point>& b_list)
 {
   if (a_list.size() == b_list.size()) {
@@ -31,6 +33,7 @@ bool Util::comparePointListASCByX(std::vector<Point>& a_list, std::vector<Point>
     return a_list.size() < b_list.size();
   }
 }
+
 bool Util::compareEqualPointList(std::vector<Point>& point_list_a, std::vector<Point>& point_list_b)
 {
   if (point_list_a.size() != point_list_b.size()) {
@@ -54,6 +57,7 @@ bool Util::compareEdgeASCByX(Edge& a, Edge& b)
     return comparePointASCByX(a.get_p2(), b.get_p2());
   }
 }
+
 bool Util::compareEdgeListASCByX(std::vector<Edge>& a_list, std::vector<Edge>& b_list)
 {
   if (a_list.size() == b_list.size()) {
@@ -68,6 +72,7 @@ bool Util::compareEdgeListASCByX(std::vector<Edge>& a_list, std::vector<Edge>& b
     return a_list.size() < b_list.size();
   }
 }
+
 bool Util::compareEqualEdgeList(std::vector<Edge>& edge_list_a, std::vector<Edge>& edge_list_b)
 {
   if (edge_list_a.size() != edge_list_b.size()) {
@@ -101,6 +106,7 @@ void Util::compressGeometryByX(std::vector<Point>& temp_list)
     }
   }
 }
+
 void Util::compressGeometryByY(std::vector<Point>& temp_list)
 {
   int reduction = 0, base = 0;
@@ -120,7 +126,6 @@ void Util::compressGeometryByY(std::vector<Point>& temp_list)
     }
   }
 }
-
 // filterCombs:按照x排序 x压缩 按照y排序 y压缩
 bool Util::filterPointList(std::vector<Point>& temp_list)
 {
@@ -267,7 +272,6 @@ void Util::countPointDegree(std::vector<std::pair<Point, int>>& point_num_list, 
     point_num_list.push_back(std::make_pair(point, 1));
   }
 }
-
 // 判断边的连通性
 bool Util::isConnected(std::vector<Point>&                 point_list,
                        std::vector<Edge>&                  edge_list,

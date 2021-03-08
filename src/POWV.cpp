@@ -161,6 +161,7 @@ void POWV::print(int powv_h, int powv_v)
   printEdgeNumList(powv_h, powv_v);
   printPostList(powv_h, powv_v);
 }
+
 void POWV::printEdgeNumList(int powv_h, int powv_v)
 {
   if ((int) _edge_num_list.size() != (powv_h + powv_v)) {
@@ -178,6 +179,7 @@ void POWV::printEdgeNumList(int powv_h, int powv_v)
   }
   std::cout << "]" << std::endl;
 }
+
 void POWV::printPostList(int powv_h, int powv_v)
 {
   // print _post_list

@@ -19,4 +19,28 @@ void PreTree::createEdgeNumList(int powv_h, int powv_v)
     }
   }
 }
+
+void PreTree::print(int powv_h, int powv_v)
+{
+  // print _edge_num_list
+  std::cout << "[INFO]           [";
+  std::cout << " ";
+  for (int i = 0; i < powv_h; i++) {
+    std::cout << _edge_num_list[i];
+    std::cout << " ";
+  }
+  std::cout << "/ ";
+  for (int i = powv_h; i < (powv_h + powv_v); i++) {
+    std::cout << _edge_num_list[i];
+    std::cout << " ";
+  }
+  std::cout << "]";
+  // print _edge_list
+  std::cout << "[";
+  for (size_t i = 0; i < _edge_list.size(); i++) {
+    std::cout << " ";
+    _edge_list[i].print();
+  }
+  std::cout << " ]\n";
+}
 }  // namespace slut
