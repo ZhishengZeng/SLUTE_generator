@@ -16,7 +16,7 @@ int main()
     generator.set_point_num(i);
     generator.set_slut_file(slut_file);
     generator.init();
-    generator.process();
+    // generator.process();
 
     end = Util::microtime();
     std::cout << "[INFO] Created " << i << " points look-up table : " << (end - start) << "s"

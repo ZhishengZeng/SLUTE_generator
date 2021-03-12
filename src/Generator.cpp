@@ -6,15 +6,16 @@ namespace slut {
 
 void Generator::init()
 {
-  int new_num = 200000;  //<! 新增点组合数量
+  //新增unique_num个点组合后去重
+  int unique_num = 200000;
   if (_point_num <= 6) {
-    new_num = 200000;
+    unique_num = 200000;
   } else if (_point_num == 7) {
-    new_num = 9000000;
+    unique_num = 9000000;
   } else if (_point_num == 8) {
-    new_num = 50000000;
+    unique_num = 50000000;
   } else if (_point_num == 9) {
-    new_num = 200000000;
+    unique_num = 200000000;
   }
 
   // 记录给定点个数
@@ -53,11 +54,12 @@ void Generator::init()
         create_num++;
       }
       // 去重器 (压缩后出现大量重复)
-      if (create_num % new_num == 0) {
-        // 每新增二十万去一次重
+      if (create_num == unique_num) {
+        // 每新增一定数量去一次重
         int delete_num = Util::UniquePointList(result_list);
         std::cout << "[INFO] Created " << result_list.size() << " combs (add "
-                  << new_num - delete_num << " combs)" << std::endl;
+                  << create_num - delete_num << " combs)" << std::endl;
+        create_num = 0;
       }
       if ((idx_list[k - 1] + 1) == n) {
         break;
