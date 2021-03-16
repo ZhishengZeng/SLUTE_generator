@@ -1,11 +1,11 @@
 #include "Generator.h"
 #include "Util.h"
 
-using namespace slut;
+using namespace slute;
 
 int main()
 {
-  std::ofstream* slut_file = new std::ofstream("slut.txt");
+  std::ofstream* slute_file = new std::ofstream("slute.txt");
 
   for (size_t i = 2; i <= 6; i++) {
     std::cout << "[INFO] Now create " << i << " points look-up table" << std::endl;
@@ -14,7 +14,7 @@ int main()
 
     Generator generator;
     generator.set_point_num(i);
-    generator.set_slut_file(slut_file);
+    generator.set_slute_file(slute_file);
     generator.init();
     generator.process();
 
@@ -23,6 +23,6 @@ int main()
               << std::endl;
   }
 
-  slut_file->close();
+  slute_file->close();
   return 0;
 }

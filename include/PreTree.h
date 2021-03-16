@@ -2,7 +2,7 @@
 #ifndef INCLUDE_PRETREE_H_
 #define INCLUDE_PRETREE_H_
 #include "Edge.h"
-namespace slut {
+namespace slute {
 class PreTree
 {
  private:
@@ -70,5 +70,5 @@ class PreTree
   void print(int powv_h, int powv_v);
 };
 
-}  // namespace slut
+}  // namespace slute
 #endif  // INCLUDE_PRETREE_H_

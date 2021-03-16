@@ -2,11 +2,11 @@
 #ifndef INCLUDE_COMB_H_
 #define INCLUDE_COMB_H_
 #include "POWV.h"
-namespace slut {
+namespace slute {
 class Comb
 {
  private:
-  std::ofstream* _slut_file;
+  std::ofstream* _slute_file;
   // POWV length = powv_h+powv_v;
   int    _powv_h;
   int    _powv_v;
@@ -20,8 +20,8 @@ class Comb
   std::vector<POWV>    _powv_list;
 
  public:
-  Comb(std::ofstream* slut_file, std::vector<Point>& point_list)
-      : _slut_file(slut_file),
+  Comb(std::ofstream* slute_file, std::vector<Point>& point_list)
+      : _slute_file(slute_file),
         _powv_h(0),
         _powv_v(0),
         _h_tree_length(0),
@@ -132,5 +132,5 @@ class Comb
   void destroy();
 };
 
-}  // namespace slut
+}  // namespace slute
 #endif  // INCLUDE_COMB_H_

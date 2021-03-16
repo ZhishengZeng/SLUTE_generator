@@ -1,5 +1,5 @@
 #include "POST.h"
-namespace slut {
+namespace slute {
 void POST::initEdgeIdxList(int powv_h, int powv_v)
 {
   _edge_idx_list.resize(powv_h + powv_v);
@@ -30,4 +30,4 @@ void POST::print()
     _edge_list[i].print();
   }
 }
-}  // namespace slut
+}  // namespace slute

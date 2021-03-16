@@ -1,5 +1,5 @@
 #include "PreTree.h"
-namespace slut {
+namespace slute {
 
 void PreTree::createEdgeNumList(int powv_h, int powv_v)
 {
@@ -43,4 +43,4 @@ void PreTree::print(int powv_h, int powv_v)
   }
   std::cout << " ]\n";
 }
-}  // namespace slut
+}  // namespace slute

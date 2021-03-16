@@ -20,7 +20,7 @@
 #define OBJECT_DESTROY_LOG 0
 using namespace std;
 
-namespace slut {
+namespace slute {
 class Point
 {
  private:
@@ -97,5 +97,5 @@ class Point
   void print() { std::cout << "(" << _x << "," << _y << ")"; }
 };
 
-}  // namespace slut
+}  // namespace slute
 #endif  // INCLUDE_POINT_H_

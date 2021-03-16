@@ -1,7 +1,7 @@
 #include "Comb.h"
 
 #include "Util.h"
-namespace slut {
+namespace slute {
 
 void Comb::process()
 {
@@ -331,38 +331,38 @@ void Comb::reportEdgeNumList(std::vector<int>& edge_num_list, bool yes)
 
 void Comb::write()
 {
-  std::ofstream& slut_file = (*_slut_file);
+  std::ofstream& slute_file = (*_slute_file);
   // y坐标升序
   std::sort(_point_list.begin(), _point_list.end(), Util::comparePointASCByY);
 
   // 坐标xyxy
-  slut_file << "$";
+  slute_file << "$";
   for (size_t i = 0; i < _point_list.size(); i++) {
-    slut_file << _point_list[i].get_x() << _point_list[i].get_y();
+    slute_file << _point_list[i].get_x() << _point_list[i].get_y();
   }
-  slut_file << "\n";
+  slute_file << "\n";
   // powv
   for (size_t i = 0; i < _powv_list.size(); i++) {
     if (_powv_list[i].get_post_list().size() == 0) {
       // 若此powv没有post 则跳过
       continue;
     }
-    slut_file << "#";
+    slute_file << "#";
     std::vector<int>& edge_num_list = _powv_list[i].get_edge_num_list();
     for (size_t j = 0; j < edge_num_list.size(); j++) {
-      slut_file << edge_num_list[j];
+      slute_file << edge_num_list[j];
     }
-    slut_file << "\n";
+    slute_file << "\n";
     // post
     std::vector<POST> post_list = _powv_list[i].get_post_list();
     for (size_t j = 0; j < post_list.size(); j++) {
       std::vector<std::vector<int>>& edge_idx_list = post_list[j].get_edge_idx_list();
       for (size_t k = 0; k < edge_idx_list.size(); k++) {
         for (size_t l = 0; l < edge_idx_list[k].size(); l++) {
-          slut_file << edge_idx_list[k][l];
+          slute_file << edge_idx_list[k][l];
         }
       }
-      slut_file << "\n";
+      slute_file << "\n";
     }
   }
 }
@@ -416,4 +416,4 @@ void Comb::destroy()
   _powv_list.clear();
 }
 
-}  // namespace slut
+}  // namespace slute

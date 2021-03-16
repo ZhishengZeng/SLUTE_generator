@@ -2,7 +2,7 @@
 #ifndef INCLUDE_EDGE_H_
 #define INCLUDE_EDGE_H_
 #include "Point.h"
-namespace slut {
+namespace slute {
 class Edge
 {
  private:
@@ -76,5 +76,5 @@ class Edge
   }
 };
 
-}  // namespace slut
+}  // namespace slute
 #endif  // INCLUDE_EDGE_H_

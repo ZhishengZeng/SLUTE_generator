@@ -1,7 +1,7 @@
 #include "POWV.h"
 
 #include "Util.h"
-namespace slut {
+namespace slute {
 
 void POWV::createPost(int                   powv_h,
                       int                   powv_v,
@@ -199,4 +199,4 @@ void POWV::printPostList(int powv_h, int powv_v)
   }
 }
 
-}  // namespace slut
+}  // namespace slute

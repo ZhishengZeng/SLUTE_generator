@@ -2,7 +2,7 @@
 
 #include "Util.h"
 
-namespace slut {
+namespace slute {
 
 void Generator::init()
 {
@@ -19,7 +19,7 @@ void Generator::init()
   }
 
   // 记录给定点个数
-  (*_slut_file) << "p=" << _point_num << "\n";
+  (*_slute_file) << "p=" << _point_num << "\n";
   // 初始化所有点集
   std::vector<Point> source_list;
   source_list.reserve(_point_num * _point_num);
@@ -92,7 +92,7 @@ void Generator::init()
   // 以point_list生成初始comb_list
   _comb_list.reserve(result_list.size());
   for (size_t i = 0; i < result_list.size(); i++) {
-    _comb_list.emplace_back(_slut_file, result_list[i]);
+    _comb_list.emplace_back(_slute_file, result_list[i]);
   }
 }
 
@@ -109,4 +109,4 @@ void Generator::process()
   }
 }
 
-}  // namespace slut
+}  // namespace slute

@@ -2,7 +2,7 @@
 #ifndef INCLUDE_UTIL_H_
 #define INCLUDE_UTIL_H_
 #include "POWV.h"
-namespace slut {
+namespace slute {
 class Util
 {
  private:
@@ -209,5 +209,5 @@ class Util
     return result_list;
   };
 };
-}  // namespace slut
+}  // namespace slute
 #endif  // INCLUDE_UTIL_H_

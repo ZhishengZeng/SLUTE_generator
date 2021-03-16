@@ -4,7 +4,7 @@
 #include "POST.h"
 #include "PreTree.h"
 
-namespace slut {
+namespace slute {
 
 class POWV
 {
@@ -84,5 +84,5 @@ class POWV
   void printPostList(int powv_h, int powv_v);
 };
 
-}  // namespace slut
+}  // namespace slute
 #endif  // INCLUDE_POWV_H_

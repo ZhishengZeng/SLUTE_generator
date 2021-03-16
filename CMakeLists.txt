@@ -1,7 +1,7 @@
-project(slut)
+project(slute)
 cmake_minimum_required(VERSION 3.11)
 
-add_library(slut
+add_library(slute
 src/Comb.cpp
 src/Generator.cpp
 src/POST.cpp
@@ -15,8 +15,8 @@ SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall -fopenmp")
 # SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g2 -ggdb -fopenmp")
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
-add_executable(generateSLUT ${PROJECT_SOURCE_DIR}/generateSLUT.cpp)
-target_link_libraries(generateSLUT slut)
+add_executable(generateSLUTE ${PROJECT_SOURCE_DIR}/generateSLUTE.cpp)
+target_link_libraries(generateSLUTE slute)
 
 
 

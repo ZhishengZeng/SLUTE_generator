@@ -2,7 +2,7 @@
 #ifndef INCLUDE_POST_H_
 #define INCLUDE_POST_H_
 #include "Edge.h"
-namespace slut {
+namespace slute {
 class POST
 {
  private:
@@ -70,5 +70,5 @@ class POST
   void print();
 };
 
-}  // namespace slut
+}  // namespace slute
 #endif  // INCLUDE_POST_H_

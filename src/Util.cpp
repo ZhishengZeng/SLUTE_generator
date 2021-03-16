@@ -1,6 +1,6 @@
 #include "Util.h"
 
-namespace slut {
+namespace slute {
 
 double Util::microtime()
 {
@@ -442,4 +442,4 @@ int Util::UniquePOST(std::vector<std::vector<Edge>>& result_list)
   result_list.erase(result_list.begin() + save_id, result_list.end());
   return delete_num;
 }
-}  // namespace slut
+}  // namespace slute

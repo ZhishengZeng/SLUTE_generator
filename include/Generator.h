@@ -4,13 +4,13 @@
 
 #include "Comb.h"
 
-namespace slut {
+namespace slute {
 class Generator
 {
  private:
   int               _point_num;
   std::vector<Comb> _comb_list;
-  std::ofstream*    _slut_file;
+  std::ofstream*    _slute_file;
 
  public:
   Generator()
@@ -64,11 +64,11 @@ class Generator
 
   // setter
   void set_point_num(const int point_num) { _point_num = point_num; }
-  void set_slut_file(std::ofstream* slut_file) { _slut_file = slut_file; }
+  void set_slute_file(std::ofstream* slute_file) { _slute_file = slute_file; }
   // function
   void init();
   void process();
 };
 
-}  // namespace slut
+}  // namespace slute
 #endif  // INCLUDE_GENERATOR_H_
